@@ -1,4 +1,5 @@
 <script setup>
+import AppFooter from '@/layouts/components/AppFooter.vue'
 import NavItems from '@/layouts/components/NavItems.vue'
 import logo from '@images/logo.svg?raw'
 import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue'
@@ -91,7 +92,7 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
 
     <!-- 👉 Footer -->
     <template #footer>
-      <Footer />
+      <AppFooter />
     </template>
   </VerticalNavLayout>
 </template>
