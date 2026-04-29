@@ -5,6 +5,13 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
 <template>
   <VerticalNavLink
     :item="{
+      title: 'Inicio',
+      icon: 'ri-home-4-line',
+      to: '/dashboard',
+    }"
+  />
+  <VerticalNavLink
+    :item="{
       title: 'Configuración de cuenta',
       icon: 'ri-user-settings-line',
       to: '/account-settings',
