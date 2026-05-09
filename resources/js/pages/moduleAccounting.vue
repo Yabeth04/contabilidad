@@ -78,25 +78,34 @@
         >
           <VTextField
             v-model="v$.amount.$model"
+            class="monto-with-action"
             type="number"
             label="Monto"
             variant="outlined"
             rounded="lg"
-            :error-messages="errors(v$.amount)"
+            hide-spin-buttons
             hide-details="auto"
-          />
+            :error-messages="errors(v$.amount)"
+            @keyup.enter="storeAccounting"
+          >
+            <template #append-inner>
+              <VBtn
+                color="primary"
+                variant="flat"
+                class="monto-with-action__btn rounded-s-0 rounded-e-lg"
+                aria-label="Contabilizar"
+                tabindex="-1"
+                @click.stop="storeAccounting"
+              >
+                <VIcon
+                  icon="ri-arrow-right-line"
+                  size="22"
+                />
+              </VBtn>
+            </template>
+          </VTextField>
         </VCol>
       </VRow>
-
-      <!-- Botón -->
-      <div class="d-flex justify-end mt-4">
-        <VBtn
-          color="primary"
-          @click="storeAccounting"
-        >
-          Contabilizar
-        </VBtn>
-      </div>
     </VContainer>
   </VForm>
 
@@ -321,5 +330,33 @@ export default {
 .accounting-table__num {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum';
+}
+
+/* Anula el --v-field-padding-end reducido que pone .v-field--appended (suele ser ~6px) */
+.monto-with-action :deep(.v-field.v-field--appended) {
+  --v-field-padding-end: var(--v-field-padding-start, 16px);
+}
+
+/* Integra el botón en el campo sin cambiar variant/outline nativos de Vuetify */
+.monto-with-action :deep(.v-field__field) {
+  align-items: stretch;
+}
+
+.monto-with-action :deep(.v-field__append-inner) {
+  align-self: stretch;
+  align-items: stretch;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-inline-start: 0;
+  margin-inline-end: calc(-1 * var(--v-field-padding-end, 16px));
+}
+
+.monto-with-action__btn {
+  align-self: stretch;
+  min-width: 48px !important;
+  height: auto !important;
+  min-height: 100%;
+  box-shadow: none !important;
+  border-inline-start: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
 }
 </style>
