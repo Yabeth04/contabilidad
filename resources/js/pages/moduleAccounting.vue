@@ -1,11 +1,11 @@
 <template>
   <VForm>
     <VContainer>
+      <!-- Inputs -->
       <VRow
-        align="end"
+        align="start"
         dense
       >
-        <!-- Fecha -->
         <VCol
           cols="12"
           md="4"
@@ -13,20 +13,15 @@
           <VDateInput
             v-model="date"
             label="Fecha"
-            placeholder="dd/mm/aaaa"
             variant="outlined"
             rounded="lg"
-            hide-actions
-            prepend-icon=""
-            prepend-inner-icon=""
             append-inner-icon="ri-calendar-line"
             :error-messages="errors(v$.date)"
-            required
+            hide-details="auto"
             show-adjacent-months
           />
         </VCol>
 
-        <!-- Tipo de movimiento -->
         <VCol
           cols="12"
           md="4"
@@ -38,10 +33,10 @@
             variant="outlined"
             rounded="lg"
             :error-messages="errors(v$.selectedType)"
+            hide-details="auto"
           />
         </VCol>
 
-        <!-- Monto -->
         <VCol
           cols="12"
           md="4"
@@ -53,22 +48,20 @@
             variant="outlined"
             rounded="lg"
             :error-messages="errors(v$.amount)"
+            hide-details="auto"
           />
         </VCol>
-
-        <!-- Botón -->
-        <VCol
-          cols="12"
-          class="d-flex justify-end"
-        >
-          <VBtn
-            color="primary"
-            @click="submit"
-          >
-            Contabilizar
-          </VBtn>
-        </VCol>
       </VRow>
+
+      <!-- Botón -->
+      <div class="d-flex justify-end mt-4">
+        <VBtn
+          color="primary"
+          @click="submit"
+        >
+          Contabilizar
+        </VBtn>
+      </div>
     </VContainer>
   </VForm>
 </template>
