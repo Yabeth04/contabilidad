@@ -78,7 +78,7 @@
         >
           <VTextField
             v-model="v$.amount.$model"
-            class="monto-with-action"
+            :class="mdAndUp ? 'monto-with-action' : undefined"
             type="number"
             label="Monto"
             variant="outlined"
@@ -90,6 +90,7 @@
           >
             <template #append-inner>
               <VBtn
+                v-if="mdAndUp"
                 color="primary"
                 variant="flat"
                 class="monto-with-action__btn rounded-s-0 rounded-e-lg"
@@ -106,6 +107,21 @@
           </VTextField>
         </VCol>
       </VRow>
+
+      <!-- Móvil / tablet: botón completo -->
+      <div
+        v-if="mdAndDown"
+        class="d-flex justify-end mt-4"
+      >
+        <VBtn
+          color="primary"
+          rounded="lg"
+          block
+          @click="storeAccounting"
+        >
+          Contabilizar
+        </VBtn>
+      </div>
     </VContainer>
   </VForm>
 
@@ -115,9 +131,6 @@
       rounded="lg"
       class="accounting-table-card overflow-hidden"
     >
-      <VCardTitle class="text-h6 py-4 px-5 d-flex align-center bg-surface">
-        Movimientos
-      </VCardTitle>
       <VDivider />
       <VTable
         class="accounting-table"
@@ -184,14 +197,19 @@ import submittedVuelidateForm from '@/mixins/submittedVuelidateForm'
 import { useVuelidate } from '@vuelidate/core'
 import { decimal, helpers, required } from '@vuelidate/validators'
 import axios from 'axios'
+import { useDisplay } from 'vuetify'
 
 export default {
   name: 'ModuleAccounting',
   mixins: [submittedVuelidateForm],
 
   setup() {
+    const { mdAndUp, mdAndDown } = useDisplay()
+
     return {
       v$: useVuelidate(),
+      mdAndUp,
+      mdAndDown,
     }
   },
 
