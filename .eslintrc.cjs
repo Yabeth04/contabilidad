@@ -62,24 +62,11 @@ module.exports = {
     // add parens ony when required in arrow function
     'arrow-parens': ['error', 'as-needed'],
 
-    // add new line above comment
-    'newline-before-return': 'error',
+    // Desactivado: no forzar líneas en blanco antes de return
+    'newline-before-return': 'off',
 
-    // add new line above comment
-    'lines-around-comment': [
-      'error',
-      {
-        beforeBlockComment: true,
-        beforeLineComment: true,
-        allowBlockStart: true,
-        allowClassStart: true,
-        allowObjectStart: true,
-        allowArrayStart: true,
-
-        // We don't want to add extra space above closing SECTION
-        ignorePattern: '!SECTION',
-      },
-    ],
+    // Desactivado: no forzar líneas en blanco alrededor de comentarios
+    'lines-around-comment': 'off',
 
     // Ignore _ as unused variable
 
@@ -88,13 +75,8 @@ module.exports = {
 
     'vue/multi-word-component-names': 'off',
 
-    'padding-line-between-statements': [
-      'error',
-      { blankLine: 'always', prev: 'expression', next: 'const' },
-      { blankLine: 'always', prev: 'const', next: 'expression' },
-      { blankLine: 'always', prev: 'multiline-const', next: '*' },
-      { blankLine: 'always', prev: '*', next: 'multiline-const' },
-    ],
+    // Desactivado: no forzar líneas en blanco entre tipos de sentencias
+    'padding-line-between-statements': 'off',
 
     // Plugin: eslint-plugin-import
     'import/prefer-default-export': 'off',

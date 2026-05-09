@@ -119,7 +119,6 @@ export default {
 
   data() {
     return {
-      date: new Date(),
       movementTypes: [
         { title: 'Ingreso', value: 'haber' },
         { title: 'Gasto', value: 'debe' },
@@ -131,13 +130,13 @@ export default {
         { title: 'Transferencia', value: 'transferencia' },
         { title: 'Otros', value: 'otros' },
       ],
+      date: new Date(),
       selectedPaymentType: null,
       selectedMovementType: null,
       amount: '',
       description: '',
     }
   },
-
   validations() {
     return {
       date: {
@@ -155,11 +154,9 @@ export default {
       },
     }
   },
-
   methods: {
     async storeAccounting() {
       this.submitted = true
-
       const isValid = await this.v$.$validate()
 
       if (!isValid) {
@@ -174,14 +171,13 @@ export default {
           amount: this.amount,
           description: this.description,
         })
-        .then(response => {
-          console.log(response)
+        .then(() => {
+          this.resetForm()
         })
         .catch(error => {
           console.log(error)
         })
     },
-
     showAccounting() {
       axios
         .get('/api/accounting')
@@ -191,6 +187,15 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    resetForm() {
+      this.date = new Date()
+      this.selectedMovementType = null
+      this.selectedPaymentType = null
+      this.amount = ''
+      this.description = ''
+      this.submitted = false
+      this.v$.$reset()
     },
   },
 }
