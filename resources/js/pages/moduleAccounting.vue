@@ -14,7 +14,7 @@
             variant="outlined"
             rounded="lg"
             hide-actions
-            :prepend-icon="false"
+            prepend-icon=""
             append-inner-icon="ri-calendar-line"
             :error-messages="errors(v$.date)"
             required
