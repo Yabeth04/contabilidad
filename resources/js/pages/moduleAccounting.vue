@@ -100,43 +100,74 @@
     </VContainer>
   </VForm>
 
-  <!-- tabla -->
-  <VTable
-    height="400px"
-    fixed-header
-  >
-    <thead>
-      <tr>
-        <th class="text-left">
-          Fecha
-        </th>
-        <th class="text-left">
-          Descripción
-        </th>
-        <th class="text-left">
-          Haber
-        </th>
-        <th class="text-left">
-          Debe
-        </th>
-        <th class="text-left">
-          Tipo de pago
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        v-for="item in accounting"
-        :key="item.id"
+  <VContainer class="pa-0 mt-6">
+    <VCard
+      variant="outlined"
+      rounded="lg"
+      class="accounting-table-card overflow-hidden"
+    >
+      <VCardTitle class="text-h6 py-4 px-5 d-flex align-center bg-surface">
+        Movimientos
+      </VCardTitle>
+      <VDivider />
+      <VTable
+        class="accounting-table"
+        density="comfortable"
+        fixed-header
+        height="min(400px, 55vh)"
+        hover
       >
-        <td>{{ item.date }}</td>
-        <td>{{ item.description }}</td>
-        <td>{{ item.movement_type === 'haber' ? item.amount : '' }}</td>
-        <td>{{ item.movement_type === 'debe' ? item.amount : '' }}</td>
-        <td>{{ item.payment_type }}</td>
-      </tr>
-    </tbody>
-  </VTable>
+        <thead>
+          <tr>
+            <th class="accounting-table__th text-start">
+              Fecha
+            </th>
+            <th class="accounting-table__th text-start">
+              Descripción
+            </th>
+            <th class="accounting-table__th text-end">
+              Haber
+            </th>
+            <th class="accounting-table__th text-end">
+              Debe
+            </th>
+            <th class="accounting-table__th text-start accounting-table__th--narrow">
+              Tipo de pago
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="item in accounting"
+            :key="item.id"
+          >
+            <td class="text-body-2 text-medium-emphasis">
+              {{ formatTableDate(item.date) }}
+            </td>
+            <td class="text-body-2">
+              {{ item.description || '—' }}
+            </td>
+            <td class="text-end accounting-table__num">
+              {{ cellAmount(item, 'haber') }}
+            </td>
+            <td class="text-end accounting-table__num">
+              {{ cellAmount(item, 'debe') }}
+            </td>
+            <td>
+              <VChip
+                size="small"
+                variant="tonal"
+                color="primary"
+                class="text-caption font-weight-medium"
+              >
+                {{ paymentTypeLabel(item.payment_type) }}
+              </VChip>
+            </td>
+          </tr>
+        </tbody>
+      </VTable>
+    </VCard>
+  </VContainer>
 </template>
 
 <script>
@@ -248,6 +279,70 @@ export default {
       this.submitted = false
       this.v$.$reset()
     },
+
+    paymentTypeLabel(value) {
+      const found = this.paymentTypes.find(p => p.value === value)
+
+      return found ? found.title : value
+    },
+
+    formatTableDate(value) {
+      if (value == null || value === '')
+        return '—'
+
+      if (typeof value === 'string')
+        return value.includes('T') ? value.split('T')[0] : value
+
+      return this.$formatDate(value) ?? '—'
+    },
+
+    cellAmount(item, side) {
+      if (item.movement_type !== side)
+        return '—'
+
+      const n = Number(item.amount)
+
+      if (Number.isNaN(n))
+        return '—'
+
+      return n.toLocaleString('es', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    },
   },
 }
 </script>
+
+<style scoped>
+.accounting-table-card {
+  border-color: rgba(var(--v-theme-on-surface), 0.08);
+}
+
+.accounting-table :deep(thead th) {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0 1px 0 rgba(var(--v-theme-on-surface), 0.08);
+}
+
+.accounting-table__th {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(var(--v-theme-on-surface), 0.65) !important;
+  background: rgb(var(--v-theme-surface)) !important;
+  white-space: nowrap;
+}
+
+.accounting-table__th--narrow {
+  width: 1%;
+}
+
+.accounting-table :deep(tbody tr:nth-child(even)) {
+  background: rgba(var(--v-theme-on-surface), 0.02);
+}
+
+.accounting-table__num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+</style>
