@@ -56,6 +56,21 @@
           />
         </VCol>
 
+        <!-- descripción -->
+        <VCol
+          cols="12"
+          md="4"
+        >
+          <VTextField
+            v-model="description"
+            type="text"
+            label="Descripción"
+            variant="outlined"
+            rounded="lg"
+            hide-details="auto"
+          />
+        </VCol>
+
         <!-- Monto -->
         <VCol
           cols="12"
@@ -118,6 +133,7 @@ export default {
       selectedPaymentType: null,
       selectedMovementType: null,
       amount: '',
+      description: '',
     }
   },
 
