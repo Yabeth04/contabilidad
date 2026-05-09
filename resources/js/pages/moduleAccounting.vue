@@ -142,16 +142,16 @@
             :key="item.id"
           >
             <td class="text-body-2 text-medium-emphasis">
-              {{ formatTableDate(item.date) }}
+              {{ item.date }}
             </td>
             <td class="text-body-2">
               {{ item.description || '—' }}
             </td>
             <td class="text-end accounting-table__num">
-              {{ cellAmount(item, 'haber') }}
+              {{ item.movement_type === 'haber' ? $formatAmount(item.amount) : '—' }}
             </td>
             <td class="text-end accounting-table__num">
-              {{ cellAmount(item, 'debe') }}
+              {{ item.movement_type === 'debe' ? $formatAmount(item.amount) : '—' }}
             </td>
             <td>
               <VChip
@@ -279,33 +279,10 @@ export default {
       this.submitted = false
       this.v$.$reset()
     },
-
     paymentTypeLabel(value) {
       const found = this.paymentTypes.find(p => p.value === value)
 
       return found ? found.title : value
-    },
-
-    formatTableDate(value) {
-      if (value == null || value === '')
-        return '—'
-
-      if (typeof value === 'string')
-        return value.includes('T') ? value.split('T')[0] : value
-
-      return this.$formatDate(value) ?? '—'
-    },
-
-    cellAmount(item, side) {
-      if (item.movement_type !== side)
-        return '—'
-
-      const n = Number(item.amount)
-
-      if (Number.isNaN(n))
-        return '—'
-
-      return n.toLocaleString('es', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
     },
   },
 }

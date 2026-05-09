@@ -27,3 +27,21 @@ export const formatDate = value => {
 
   return `${y}-${m}-${day}`
 }
+
+/**
+ * Monto para UI: separadores en español y 2 decimales; inválidos → '—'.
+ *
+ * @param {string|number|null|undefined} value
+ * @returns {string}
+ */
+export const formatAmount = value => {
+  if (value == null || value === '')
+    return '—'
+
+  const n = Number(value)
+
+  if (Number.isNaN(n))
+    return '—'
+
+  return n.toLocaleString('es', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
