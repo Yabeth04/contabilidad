@@ -24,6 +24,21 @@
           />
         </VCol>
 
+        <!-- Descripción -->
+        <VCol
+          cols="12"
+          md="4"
+        >
+          <VTextField
+            v-model="description"
+            type="text"
+            label="Descripción"
+            variant="outlined"
+            rounded="lg"
+            hide-details="auto"
+          />
+        </VCol>
+
         <!-- Tipo de movimiento -->
         <VCol
           cols="12"
@@ -40,37 +55,6 @@
           />
         </VCol>
 
-        <!-- Tipo de pago -->
-        <VCol
-          cols="12"
-          md="4"
-        >
-          <VSelect
-            v-model="selectedPaymentType"
-            label="Tipo de pago"
-            :items="paymentTypes"
-            variant="outlined"
-            rounded="lg"
-            :error-messages="errors(v$.selectedPaymentType)"
-            hide-details="auto"
-          />
-        </VCol>
-
-        <!-- descripción -->
-        <VCol
-          cols="12"
-          md="4"
-        >
-          <VTextField
-            v-model="description"
-            type="text"
-            label="Descripción"
-            variant="outlined"
-            rounded="lg"
-            hide-details="auto"
-          />
-        </VCol>
-
         <!-- Monto -->
         <VCol
           cols="12"
@@ -83,6 +67,22 @@
             variant="outlined"
             rounded="lg"
             :error-messages="errors(v$.amount)"
+            hide-details="auto"
+          />
+        </VCol>
+
+        <!-- Tipo de pago -->
+        <VCol
+          cols="12"
+          md="4"
+        >
+          <VSelect
+            v-model="selectedPaymentType"
+            label="Tipo de pago"
+            :items="paymentTypes"
+            variant="outlined"
+            rounded="lg"
+            :error-messages="errors(v$.selectedPaymentType)"
             hide-details="auto"
           />
         </VCol>
@@ -111,7 +111,7 @@
           Fecha
         </th>
         <th class="text-left">
-          Tipo de pago
+          Descripción
         </th>
         <th class="text-left">
           Haber
@@ -120,7 +120,7 @@
           Debe
         </th>
         <th class="text-left">
-          Descripción
+          Tipo de pago
         </th>
       </tr>
     </thead>
@@ -130,10 +130,10 @@
         :key="item.id"
       >
         <td>{{ item.date }}</td>
-        <td>{{ item.payment_type }}</td>
+        <td>{{ item.description }}</td>
         <td>{{ item.movement_type === 'haber' ? item.amount : '' }}</td>
         <td>{{ item.movement_type === 'debe' ? item.amount : '' }}</td>
-        <td>{{ item.description }}</td>
+        <td>{{ item.payment_type }}</td>
       </tr>
     </tbody>
   </VTable>
