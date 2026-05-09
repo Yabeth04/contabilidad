@@ -7,10 +7,10 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AppVuelidateField: typeof import('./resources/js/components/AppVuelidateField.vue')['default']
     ErrorHeader: typeof import('./resources/js/components/ErrorHeader.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ThemeSwitcher: typeof import('./resources/js/@core/components/ThemeSwitcher.vue')['default']
-    VueApexCharts: typeof import('vue3-apexcharts')['default']
   }
 }

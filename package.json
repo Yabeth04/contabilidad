@@ -13,6 +13,8 @@
     "@floating-ui/dom": "1.6.8",
     "@iconify-json/bxl": "^1.1.10",
     "@stylistic/stylelint-config": "^1.0.1",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "@vueuse/core": "^10.11.1",
     "@vueuse/math": "^10.11.1",
     "apexcharts": "^3.54.1",

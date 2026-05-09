@@ -137,9 +137,10 @@ module.exports = {
     'promise/always-return': 'off',
     'promise/catch-or-return': 'off',
 
-    // ESLint plugin vue
+    // ESLint plugin vue 
+    //permitir usar script option api
     'vue/block-tag-newline': 'error',
-    'vue/component-api-style': 'error',
+    'vue/component-api-style': ['error', ['script-setup', 'composition', 'options']],
     'vue/component-name-in-template-casing': ['error', 'PascalCase', { registeredComponentsOnly: false, ignores: ['/^swiper-/'] }],
     'vue/custom-event-name-casing': ['error', 'camelCase', {
       ignores: [

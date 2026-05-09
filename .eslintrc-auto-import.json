@@ -324,6 +324,15 @@
     "watchThrottled": true,
     "watchTriggerable": true,
     "watchWithFilter": true,
-    "whenever": true
+    "whenever": true,
+    "email": true,
+    "integer": true,
+    "maxLength": true,
+    "maxValue": true,
+    "minLength": true,
+    "minValue": true,
+    "numeric": true,
+    "required": true,
+    "url": true
   }
 }
