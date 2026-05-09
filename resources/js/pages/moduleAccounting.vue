@@ -102,7 +102,7 @@
 
   <!-- tabla -->
   <VTable
-    height="300px"
+    height="400px"
     fixed-header
   >
     <thead>
