@@ -2,17 +2,38 @@
   <VForm>
     <VContainer>
       <VRow>
+        <!-- Fecha -->
         <VCol
           cols="12"
           md="4"
         >
-          <VTextField
-            v-model="v$.firstname.$model"
-            label="First name"
-            :error-messages="errors(v$.firstname)"
-          />
+          <VMenu
+            v-model="menu"
+            :close-on-content-click="false"
+            location="bottom start"
+          >
+            <template #activator="{ props: menuProps }">
+              <VTextField
+                v-bind="menuProps"
+                v-model="date"
+                label="Fecha"
+                variant="outlined"
+                rounded="lg"
+                readonly
+                append-inner-icon="ri-calendar-line"
+                :error-messages="errors(v$.date)"
+                required
+              />
+            </template>
+            <VDatePicker
+              v-model="date"
+              show-adjacent-months
+              @update:model-value="menu = false"
+            />
+          </VMenu>
         </VCol>
 
+        <!-- Last name -->
         <VCol
           cols="12"
           md="4"
@@ -20,10 +41,13 @@
           <VTextField
             v-model="v$.lastname.$model"
             label="Last name"
+            variant="outlined"
+            rounded="lg"
             :error-messages="errors(v$.lastname)"
           />
         </VCol>
 
+        <!-- E-mail -->
         <VCol
           cols="12"
           md="4"
@@ -31,12 +55,15 @@
           <VTextField
             v-model="v$.email.$model"
             label="E-mail"
+            variant="outlined"
+            rounded="lg"
             :error-messages="errors(v$.email)"
           />
         </VCol>
       </VRow>
 
-      <VRow>
+      <!-- Contabilizar -->
+      <VRow class="mt-6">
         <VCol cols="12">
           <VBtn
             color="primary"
@@ -53,7 +80,7 @@
 <script>
 import submittedVuelidateForm from '@/mixins/submittedVuelidateForm'
 import { useVuelidate } from '@vuelidate/core'
-import { email, maxLength, required } from '@vuelidate/validators'
+import { email, helpers, required } from '@vuelidate/validators'
 
 export default {
   name: 'ModuleAccounting',
@@ -67,7 +94,8 @@ export default {
 
   data() {
     return {
-      firstname: '',
+      menu: false,
+      date: null,
       lastname: '',
       email: '',
     }
@@ -75,16 +103,15 @@ export default {
 
   validations() {
     return {
-      firstname: {
-        required: { $validator: required, $message: 'First name is required' },
-        maxLength: { $validator: maxLength(10), $message: 'Max 10 characters' },
+      date: {
+        required: helpers.withMessage('Fecha es requerida', required),
       },
       lastname: {
-        required: { $validator: required, $message: 'Last name is required' },
+        required: helpers.withMessage('El nombre es requerido', required),
       },
       email: {
-        required: { $validator: required, $message: 'Email is required' },
-        email: { $validator: email, $message: 'Invalid email' },
+        required: helpers.withMessage('El email es requerido', required),
+        email: helpers.withMessage('Email inválido', email),
       },
     }
   },
