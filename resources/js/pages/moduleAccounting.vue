@@ -6,6 +6,7 @@
         align="start"
         dense
       >
+        <!-- Fecha -->
         <VCol
           cols="12"
           md="4"
@@ -15,6 +16,7 @@
             label="Fecha"
             variant="outlined"
             rounded="lg"
+            prepend-icon=""
             append-inner-icon="ri-calendar-line"
             :error-messages="errors(v$.date)"
             hide-details="auto"
@@ -22,21 +24,39 @@
           />
         </VCol>
 
+        <!-- Tipo de movimiento -->
         <VCol
           cols="12"
           md="4"
         >
           <VSelect
-            v-model="selectedType"
+            v-model="selectedMovementType"
             label="Tipo de movimiento"
-            :items="types"
+            :items="movementTypes"
             variant="outlined"
             rounded="lg"
-            :error-messages="errors(v$.selectedType)"
+            :error-messages="errors(v$.selectedMovementType)"
             hide-details="auto"
           />
         </VCol>
 
+        <!-- Tipo de pago -->
+        <VCol
+          cols="12"
+          md="4"
+        >
+          <VSelect
+            v-model="selectedPaymentType"
+            label="Tipo de pago"
+            :items="paymentTypes"
+            variant="outlined"
+            rounded="lg"
+            :error-messages="errors(v$.selectedPaymentType)"
+            hide-details="auto"
+          />
+        </VCol>
+
+        <!-- Monto -->
         <VCol
           cols="12"
           md="4"
@@ -84,11 +104,19 @@ export default {
   data() {
     return {
       date: new Date(),
-      types: [
+      movementTypes: [
         { title: 'Ingreso', value: 'haber' },
         { title: 'Gasto', value: 'debe' },
       ],
-      selectedType: null,
+      paymentTypes: [
+        { title: 'Sinpe', value: 'sinpe' },
+        { title: 'Efectivo', value: 'efectivo' },
+        { title: 'Tarjeta', value: 'tarjeta' },
+        { title: 'Transferencia', value: 'transferencia' },
+        { title: 'Otros', value: 'otros' },
+      ],
+      selectedPaymentType: null,
+      selectedMovementType: null,
       amount: '',
     }
   },
@@ -98,12 +126,15 @@ export default {
       date: {
         required: helpers.withMessage('Fecha requerida', required),
       },
-      selectedType: {
+      selectedMovementType: {
         required: helpers.withMessage('Tipo de movimiento requerido', required),
       },
       amount: {
         required: helpers.withMessage('Monto requerido', required),
         decimal: helpers.withMessage('Ingresa un monto válido', decimal),
+      },
+      selectedPaymentType: {
+        required: helpers.withMessage('Tipo de pago requerido', required),
       },
     }
   },
