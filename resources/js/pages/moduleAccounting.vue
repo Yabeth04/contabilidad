@@ -85,7 +85,7 @@ export default {
 
   data() {
     return {
-      date: null,
+      date: new Date(),
       types: [
         { title: 'Ingreso', value: 'haber' },
         { title: 'Gasto', value: 'debe' },
