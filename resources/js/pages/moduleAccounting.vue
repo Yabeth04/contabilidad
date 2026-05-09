@@ -55,22 +55,6 @@
           />
         </VCol>
 
-        <!-- Monto -->
-        <VCol
-          cols="12"
-          md="4"
-        >
-          <VTextField
-            v-model="v$.amount.$model"
-            type="number"
-            label="Monto"
-            variant="outlined"
-            rounded="lg"
-            :error-messages="errors(v$.amount)"
-            hide-details="auto"
-          />
-        </VCol>
-
         <!-- Tipo de pago -->
         <VCol
           cols="12"
@@ -83,6 +67,22 @@
             variant="outlined"
             rounded="lg"
             :error-messages="errors(v$.selectedPaymentType)"
+            hide-details="auto"
+          />
+        </VCol>
+
+        <!-- Monto -->
+        <VCol
+          cols="12"
+          md="4"
+        >
+          <VTextField
+            v-model="v$.amount.$model"
+            type="number"
+            label="Monto"
+            variant="outlined"
+            rounded="lg"
+            :error-messages="errors(v$.amount)"
             hide-details="auto"
           />
         </VCol>
@@ -233,7 +233,6 @@ export default {
       axios
         .get('/api/accounting')
         .then(response => {
-          console.log(response)
           this.accounting = response.data
         })
         .catch(error => {
