@@ -7,30 +7,19 @@
           cols="12"
           md="4"
         >
-          <VMenu
-            v-model="menu"
-            :close-on-content-click="false"
-            location="bottom start"
-          >
-            <template #activator="{ props: menuProps }">
-              <VTextField
-                v-bind="menuProps"
-                v-model="date"
-                label="Fecha"
-                variant="outlined"
-                rounded="lg"
-                readonly
-                append-inner-icon="ri-calendar-line"
-                :error-messages="errors(v$.date)"
-                required
-              />
-            </template>
-            <VDatePicker
-              v-model="date"
-              show-adjacent-months
-              @update:model-value="menu = false"
-            />
-          </VMenu>
+          <VDateInput
+            v-model="date"
+            label="Fecha"
+            placeholder="dd/mm/aaaa"
+            variant="outlined"
+            rounded="lg"
+            hide-actions
+            :prepend-icon="false"
+            append-inner-icon="ri-calendar-line"
+            :error-messages="errors(v$.date)"
+            required
+            show-adjacent-months
+          />
         </VCol>
 
         <!-- Last name -->
@@ -94,7 +83,6 @@ export default {
 
   data() {
     return {
-      menu: false,
       date: null,
       lastname: '',
       email: '',

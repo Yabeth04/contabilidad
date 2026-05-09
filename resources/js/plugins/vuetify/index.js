@@ -1,5 +1,6 @@
 import { createVuetify } from 'vuetify'
 import { VBtn } from 'vuetify/components/VBtn'
+import { VDateInput } from 'vuetify/labs/VDateInput'
 import defaults from './defaults'
 import { icons } from './icons'
 import { themes } from './theme'
@@ -10,6 +11,9 @@ import 'vuetify/styles'
 
 export default function (app) {
   const vuetify = createVuetify({
+    components: {
+      VDateInput,
+    },
     aliases: {
       IconBtn: VBtn,
     },
