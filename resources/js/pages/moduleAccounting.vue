@@ -1,7 +1,10 @@
 <template>
   <VForm>
     <VContainer>
-      <VRow>
+      <VRow
+        align="end"
+        dense
+      >
         <!-- Fecha -->
         <VCol
           cols="12"
@@ -15,6 +18,7 @@
             rounded="lg"
             hide-actions
             prepend-icon=""
+            prepend-inner-icon=""
             append-inner-icon="ri-calendar-line"
             :error-messages="errors(v$.date)"
             required
@@ -22,7 +26,7 @@
           />
         </VCol>
 
-        <!-- selection type -->
+        <!-- Tipo de movimiento -->
         <VCol
           cols="12"
           md="4"
@@ -37,7 +41,7 @@
           />
         </VCol>
 
-        <!-- monto -->
+        <!-- Monto -->
         <VCol
           cols="12"
           md="4"
@@ -51,11 +55,12 @@
             :error-messages="errors(v$.amount)"
           />
         </VCol>
-      </VRow>
 
-      <!-- Contabilizar -->
-      <VRow class="mt-6">
-        <VCol cols="12">
+        <!-- Botón -->
+        <VCol
+          cols="12"
+          class="d-flex justify-end"
+        >
           <VBtn
             color="primary"
             @click="submit"
