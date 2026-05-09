@@ -173,6 +173,14 @@ export default {
         })
         .then(() => {
           this.resetForm()
+          this.$toast.success('Guardado correctamente', {
+            timeout: 2000,
+            closeOnClick: true,
+            // pauseOnHover: true, hace que se pause el hover
+            // draggable: true, hace que se pueda arrastrar el toast
+            // maxToasts: 3, hace que se pueda mostrar un maximo de 3 toasts
+            // newestOnTop: true, hace que se muestre el toast mas nuevo al principio
+          })
         })
         .catch(error => {
           console.log(error)
