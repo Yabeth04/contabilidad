@@ -22,31 +22,33 @@
           />
         </VCol>
 
-        <!-- Last name -->
+        <!-- selection type -->
         <VCol
           cols="12"
           md="4"
         >
-          <VTextField
-            v-model="v$.lastname.$model"
-            label="Last name"
+          <VSelect
+            v-model="selectedType"
+            label="Tipo de movimiento"
+            :items="types"
             variant="outlined"
             rounded="lg"
-            :error-messages="errors(v$.lastname)"
+            :error-messages="errors(v$.selectedType)"
           />
         </VCol>
 
-        <!-- E-mail -->
+        <!-- monto -->
         <VCol
           cols="12"
           md="4"
         >
           <VTextField
-            v-model="v$.email.$model"
-            label="E-mail"
+            v-model="v$.amount.$model"
+            type="number"
+            label="Monto"
             variant="outlined"
             rounded="lg"
-            :error-messages="errors(v$.email)"
+            :error-messages="errors(v$.amount)"
           />
         </VCol>
       </VRow>
@@ -69,7 +71,7 @@
 <script>
 import submittedVuelidateForm from '@/mixins/submittedVuelidateForm'
 import { useVuelidate } from '@vuelidate/core'
-import { email, helpers, required } from '@vuelidate/validators'
+import { decimal, helpers, required } from '@vuelidate/validators'
 
 export default {
   name: 'ModuleAccounting',
@@ -84,22 +86,26 @@ export default {
   data() {
     return {
       date: null,
-      lastname: '',
-      email: '',
+      types: [
+        { title: 'Ingreso', value: 'haber' },
+        { title: 'Gasto', value: 'debe' },
+      ],
+      selectedType: null,
+      amount: '',
     }
   },
 
   validations() {
     return {
       date: {
-        required: helpers.withMessage('Fecha es requerida', required),
+        required: helpers.withMessage('Fecha requerida', required),
       },
-      lastname: {
-        required: helpers.withMessage('El nombre es requerido', required),
+      selectedType: {
+        required: helpers.withMessage('Tipo de movimiento requerido', required),
       },
-      email: {
-        required: helpers.withMessage('El email es requerido', required),
-        email: helpers.withMessage('Email inválido', email),
+      amount: {
+        required: helpers.withMessage('Monto requerido', required),
+        decimal: helpers.withMessage('Ingresa un monto válido', decimal),
       },
     }
   },
