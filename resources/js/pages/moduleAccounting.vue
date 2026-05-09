@@ -99,6 +99,44 @@
       </div>
     </VContainer>
   </VForm>
+
+  <!-- tabla -->
+  <VTable
+    height="300px"
+    fixed-header
+  >
+    <thead>
+      <tr>
+        <th class="text-left">
+          Fecha
+        </th>
+        <th class="text-left">
+          Tipo de pago
+        </th>
+        <th class="text-left">
+          Haber
+        </th>
+        <th class="text-left">
+          Debe
+        </th>
+        <th class="text-left">
+          Descripción
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        v-for="item in accounting"
+        :key="item.id"
+      >
+        <td>{{ item.date }}</td>
+        <td>{{ item.payment_type }}</td>
+        <td>{{ item.movement_type === 'haber' ? item.amount : '' }}</td>
+        <td>{{ item.movement_type === 'debe' ? item.amount : '' }}</td>
+        <td>{{ item.description }}</td>
+      </tr>
+    </tbody>
+  </VTable>
 </template>
 
 <script>
@@ -135,6 +173,7 @@ export default {
       selectedMovementType: null,
       amount: '',
       description: '',
+      accounting: [],
     }
   },
   validations() {
@@ -153,6 +192,9 @@ export default {
         required: helpers.withMessage('Tipo de pago requerido', required),
       },
     }
+  },
+  mounted() {
+    this.showAccounting()
   },
   methods: {
     async storeAccounting() {
@@ -173,6 +215,7 @@ export default {
         })
         .then(() => {
           this.resetForm()
+          this.showAccounting()
           this.$toast.success('Guardado correctamente', {
             timeout: 2000,
             closeOnClick: true,
@@ -191,6 +234,7 @@ export default {
         .get('/api/accounting')
         .then(response => {
           console.log(response)
+          this.accounting = response.data
         })
         .catch(error => {
           console.log(error)
