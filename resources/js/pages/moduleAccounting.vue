@@ -92,7 +92,7 @@
       <div class="d-flex justify-end mt-4">
         <VBtn
           color="primary"
-          @click="submit"
+          @click="storeAccounting"
         >
           Contabilizar
         </VBtn>
@@ -105,6 +105,7 @@
 import submittedVuelidateForm from '@/mixins/submittedVuelidateForm'
 import { useVuelidate } from '@vuelidate/core'
 import { decimal, helpers, required } from '@vuelidate/validators'
+import axios from 'axios'
 
 export default {
   name: 'ModuleAccounting',
@@ -156,7 +157,7 @@ export default {
   },
 
   methods: {
-    async submit() {
+    async storeAccounting() {
       this.submitted = true
 
       const isValid = await this.v$.$validate()
@@ -164,6 +165,32 @@ export default {
       if (!isValid) {
         return
       }
+
+      axios
+        .post('/api/accounting', {
+          date: this.$formatDate(this.date),
+          'movement_type': this.selectedMovementType,
+          'payment_type': this.selectedPaymentType,
+          amount: this.amount,
+          description: this.description,
+        })
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+
+    showAccounting() {
+      axios
+        .get('/api/accounting')
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
   },
 }
