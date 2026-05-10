@@ -208,8 +208,8 @@ export default {
 
     return {
       v$: useVuelidate(),
-      mdAndUp,
-      mdAndDown,
+      mdAndUp, // para usar en el campo monto (pantallas md y superiores)
+      mdAndDown, // para usar en el botón completo (pantallas md y menores)
     }
   },
 
