@@ -131,8 +131,14 @@
       rounded="lg"
       class="accounting-table-card overflow-hidden"
     >
+      <VCardTitle class="text-h6 py-4 px-5 d-flex align-center bg-surface">
+        Movimientos
+      </VCardTitle>
       <VDivider />
+
+      <!-- Escritorio / tablet ancha: tabla -->
       <VTable
+        v-if="mdAndUp"
         class="accounting-table"
         density="comfortable"
         fixed-header
@@ -191,6 +197,59 @@
           </tr>
         </tbody>
       </VTable>
+
+      <!-- Móvil / tablet estrecha: lista de tarjetas -->
+      <div
+        v-if="mdAndDown"
+        class="accounting-mobile-list pa-3"
+      >
+        <template v-if="accounting.length">
+          <VCard
+            v-for="item in accounting"
+            :key="item.id"
+            variant="outlined"
+            rounded="lg"
+            class="accounting-mobile-card mb-3"
+          >
+            <VCardText class="pa-4">
+              <div class="d-flex justify-space-between align-center flex-wrap gap-2 mb-2">
+                <span class="text-caption text-medium-emphasis">{{ item.date }}</span>
+                <VChip
+                  size="small"
+                  variant="tonal"
+                  color="primary"
+                  class="text-caption font-weight-medium"
+                >
+                  {{ paymentTypeLabel(item.payment_type) }}
+                </VChip>
+              </div>
+              <p class="text-body-2 mb-3">
+                {{ item.description || '—' }}
+              </p>
+              <div class="d-flex justify-space-between gap-4 text-body-2">
+                <div>
+                  <span class="text-medium-emphasis text-caption d-block mb-1">Haber</span>
+                  <span class="accounting-table__num font-weight-medium">
+                    {{ item.movement_type === 'haber' ? $formatAmount(item.amount) : '—' }}
+                  </span>
+                </div>
+                <div class="text-end">
+                  <span class="text-medium-emphasis text-caption d-block mb-1">Debe</span>
+                  <span class="accounting-table__num font-weight-medium">
+                    {{ item.movement_type === 'debe' ? $formatAmount(item.amount) : '—' }}
+                  </span>
+                </div>
+              </div>
+            </VCardText>
+          </VCard>
+        </template>
+        <p
+          v-else
+          class="text-body-2 text-medium-emphasis text-center py-8"
+        >
+          No hay movimientos todavía.
+        </p>
+      </div>
     </VCard>
   </VContainer>
 </template>
@@ -351,6 +410,12 @@ export default {
 .accounting-table__num {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum';
+}
+
+.accounting-mobile-list {
+  max-height: min(400px, 55vh);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Anula el --v-field-padding-end reducido que pone .v-field--appended (suele ser ~6px) */
