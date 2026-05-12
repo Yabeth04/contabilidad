@@ -131,9 +131,6 @@
       rounded="lg"
       class="accounting-table-card overflow-hidden"
     >
-      <VCardTitle class="text-h6 py-4 px-5 d-flex align-center bg-surface">
-        Movimientos
-      </VCardTitle>
       <VDivider />
 
       <!-- Escritorio / tablet ancha: tabla -->
