@@ -279,6 +279,86 @@
           </p>
         </div>
       </VInfiniteScroll>
+
+      <VDivider />
+
+      <!-- Totales: fuera del scroll, solo maqueta (montos estáticos) -->
+      <div
+        v-if="mdAndUp"
+        class="accounting-totals accounting-totals--desktop px-4 py-3"
+        aria-hidden="true"
+      >
+        <div class="accounting-totals__desktop-grid">
+          <div class="accounting-totals__desktop-icon-wrap d-flex align-center justify-center">
+            <VIcon
+              class="accounting-totals__desktop-icon text-medium-emphasis"
+              icon="ri-funds-line"
+              size="18"
+            />
+          </div>
+          <div class="accounting-totals__desktop-heading d-flex flex-column justify-center min-w-0">
+            <span class="text-body-1 font-weight-semibold text-high-emphasis">
+              Totales
+            </span>
+            <span class="text-caption text-medium-emphasis">
+              Ejemplo visual (estático)
+            </span>
+          </div>
+          <div class="accounting-totals__desktop-metric text-end">
+            <span class="accounting-totals__col-label d-block accounting-totals__col-label--tight">
+              Debe / Gasto
+            </span>
+            <span
+              class="accounting-totals__desktop-value accounting-table__num text-body-1 font-weight-semibold"
+              style="color: red;"
+            >
+              15.420,50
+            </span>
+          </div>
+          <div class="accounting-totals__desktop-metric text-end">
+            <span class="accounting-totals__col-label d-block accounting-totals__col-label--tight">
+              Haber / Ingreso
+            </span>
+            <span
+              class="accounting-totals__desktop-value accounting-table__num text-body-1 font-weight-semibold"
+              style="color: green;"
+            >
+              22.100,00
+            </span>
+          </div>
+          <div class="accounting-totals__desktop-tail d-flex align-center text-medium-emphasis text-caption" />
+        </div>
+      </div>
+
+      <div
+        v-if="mdAndDown"
+        class="accounting-totals accounting-totals--mobile pa-4"
+        aria-hidden="true"
+      >
+        <p class="accounting-totals__mobile-title text-body-2 font-weight-semibold mb-3">
+          Totales
+        </p>
+        <div class="d-flex justify-space-between align-center gap-4">
+          <div>
+            <span class="text-medium-emphasis text-caption d-block mb-1">Debe / Gasto</span>
+            <span
+              class="accounting-table__num text-body-2 font-weight-medium"
+              style="color: red;"
+            >
+              15.420,50
+            </span>
+          </div>
+          <div class="text-end">
+            <span class="text-medium-emphasis text-caption d-block mb-1">Haber / Ingreso</span>
+            <span
+              class="accounting-table__num text-body-2 font-weight-medium"
+              style="color: green;"
+            >
+              22.100,00
+            </span>
+          </div>
+        </div>
+      </div>
     </VCard>
   </VContainer>
 </template>
@@ -473,6 +553,72 @@ export default {
 
 .accounting-mobile-list {
   max-height: min(400px, 55vh);
+}
+
+.accounting-totals {
+  background: rgba(var(--v-theme-on-surface), 0.03);
+}
+
+.accounting-totals--desktop {
+  box-shadow: inset 0 1px 0 rgba(var(--v-theme-on-surface), 0.06);
+}
+
+.accounting-totals__desktop-grid {
+  display: grid;
+  grid-template-columns: 120px 1fr minmax(7rem, auto) minmax(7rem, auto) minmax(5rem, auto);
+  column-gap: 0.75rem;
+  align-items: center;
+}
+
+.accounting-totals__desktop-icon-wrap {
+  align-self: center;
+}
+
+.accounting-totals__desktop-heading {
+  gap: 0.125rem;
+  line-height: 1.25;
+}
+
+.accounting-totals__desktop-icon {
+  opacity: 0.85;
+}
+
+.accounting-totals__col-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(var(--v-theme-on-surface), 0.65);
+  line-height: 1.15;
+}
+
+.accounting-totals__col-label--tight {
+  margin-bottom: 2px;
+}
+
+.accounting-totals__desktop-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: rgba(var(--v-theme-on-surface), 0.025);
+  border: thin solid rgba(var(--v-theme-on-surface), 0.06);
+}
+
+.accounting-totals__desktop-value {
+  line-height: 1.2;
+}
+
+.accounting-totals__desktop-tail {
+  justify-content: flex-start;
+  align-self: center;
+  white-space: nowrap;
+}
+
+.accounting-totals__mobile-title {
+  color: rgba(var(--v-theme-on-surface), 0.87);
 }
 
 /* Anula el --v-field-padding-end reducido que pone .v-field--appended (suele ser ~6px) */
