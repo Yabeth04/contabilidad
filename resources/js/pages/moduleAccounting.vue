@@ -154,10 +154,10 @@
               Descripción
             </th>
             <th class="accounting-table__th text-end">
-              Debe / Ingreso
+              Debe / Gasto
             </th>
             <th class="accounting-table__th text-end">
-              Haber / Gasto
+              Haber / Ingreso
             </th>
             <th class="accounting-table__th text-start accounting-table__th--narrow">
               Tipo de pago
@@ -175,10 +175,16 @@
             <td class="text-body-2">
               {{ item.description || '—' }}
             </td>
-            <td class="text-end accounting-table__num">
+            <td
+              class="text-end accounting-table__num"
+              style="color: red;"
+            >
               {{ item.movement_type === 'debe' ? $formatAmount(item.amount) : '—' }}
             </td>
-            <td class="text-end accounting-table__num">
+            <td
+              class="text-end accounting-table__num"
+              style="color: green;"
+            >
               {{ item.movement_type === 'haber' ? $formatAmount(item.amount) : '—' }}
             </td>
             <td>
@@ -199,7 +205,13 @@
               <VInfiniteScroll
                 side="end"
                 @load="showAccounting"
-              />
+              >
+                <template #empty>
+                  <div class="text-body-2 text-medium-emphasis text-center py-4">
+                    No hay más movimientos.
+                  </div>
+                </template>
+              </VInfiniteScroll>
             </td>
           </tr>
         </tbody>
@@ -239,13 +251,19 @@
                 <div class="d-flex justify-space-between gap-4 text-body-2">
                   <div>
                     <span class="text-medium-emphasis text-caption d-block mb-1">Debe</span>
-                    <span class="accounting-table__num font-weight-medium">
+                    <span
+                      class="accounting-table__num font-weight-medium"
+                      style="color: green;"
+                    >
                       {{ item.movement_type === 'debe' ? $formatAmount(item.amount) : '—' }}
                     </span>
                   </div>
                   <div class="text-end">
                     <span class="text-medium-emphasis text-caption d-block mb-1">Haber</span>
-                    <span class="accounting-table__num font-weight-medium">
+                    <span
+                      class="accounting-table__num font-weight-medium"
+                      style="color: red;"
+                    >
                       {{ item.movement_type === 'haber' ? $formatAmount(item.amount) : '—' }}
                     </span>
                   </div>
