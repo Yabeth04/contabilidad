@@ -195,6 +195,16 @@
               </VChip>
             </td>
           </tr>
+
+          <!-- Carga más movimientos -->
+          <tr>
+            <td colspan="5">
+              <VInfiniteScroll
+                side="end"
+                @load="showAccounting"
+              />
+            </td>
+          </tr>
         </tbody>
       </VTable>
 
@@ -294,6 +304,8 @@ export default {
       amount: '',
       description: '',
       accounting: [],
+      page: 1,
+      hasMore: true,
     }
   },
   validations() {
@@ -335,6 +347,9 @@ export default {
         })
         .then(() => {
           this.resetForm()
+          this.page = 1
+          this.accounting = []
+          this.hasMore = true
           this.showAccounting()
           this.$toast.success('Guardado correctamente', {
             timeout: 2000,
@@ -349,15 +364,40 @@ export default {
           console.log(error)
         })
     },
-    showAccounting() {
-      axios
-        .get('/api/accounting')
-        .then(response => {
-          this.accounting = response.data
+    async showAccounting({ done } = {}) {
+      if (!this.hasMore && done) {
+        done('empty')
+
+        return
+      }
+
+      try {
+        const response = await axios.get('/api/accounting', {
+          params: {
+            page: this.page,
+          },
         })
-        .catch(error => {
-          console.log(error)
-        })
+
+        const rows = response.data.data ?? []
+
+        this.accounting = [...this.accounting, ...rows]
+
+        const next = response.data.next_page_url
+
+        if (next) {
+          this.page += 1
+          this.hasMore = true
+        } else {
+          this.hasMore = false
+        }
+
+        if (done)
+          done(next ? 'ok' : 'empty')
+      } catch (error) {
+        console.log(error)
+        if (done)
+          done('error')
+      }
     },
     resetForm() {
       this.date = new Date()

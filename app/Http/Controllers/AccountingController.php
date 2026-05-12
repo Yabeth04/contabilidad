@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Accounting;
@@ -10,10 +11,12 @@ class AccountingController extends Controller
     public function index()
     {
         // para listar los movimientos contables
-        return DB::table('accounting')
+        $accounting = DB::table('accounting')
             ->orderByDesc('date')
             ->orderByDesc('id')
-            ->get();
+            ->paginate(10);
+
+        return response()->json($accounting, 200);
     }
 
     public function store(Request $request)
@@ -65,11 +68,11 @@ class AccountingController extends Controller
     private function validateAccounting(Request $request)
     {
         return $request->validate([
-            'date'          => ['required', 'date'],
+            'date' => ['required', 'date'],
             'movement_type' => ['required', 'in:haber,debe'],
-            'payment_type'  => ['required', 'in:sinpe,efectivo,transferencia,tarjeta,otros'],
-            'amount'        => ['required', 'numeric', 'min:0'],
-            'description'   => ['nullable', 'string', 'max:255'],
+            'payment_type' => ['required', 'in:sinpe,efectivo,transferencia,tarjeta,otros'],
+            'amount' => ['required', 'numeric', 'min:0'],
+            'description' => ['nullable', 'string', 'max:255'],
         ]);
     }
 }
