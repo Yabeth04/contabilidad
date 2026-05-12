@@ -141,7 +141,10 @@
       >
         <thead>
           <tr>
-            <th class="accounting-table__th text-start">
+            <th
+              class="accounting-table__th text-start"
+              width="120px"
+            >
               Fecha
             </th>
             <th class="accounting-table__th text-start">
