@@ -157,10 +157,10 @@
               Descripción
             </th>
             <th class="accounting-table__th text-end">
-              Haber
+              Debe / Ingreso
             </th>
             <th class="accounting-table__th text-end">
-              Debe
+              Haber / Gasto
             </th>
             <th class="accounting-table__th text-start accounting-table__th--narrow">
               Tipo de pago
@@ -179,10 +179,10 @@
               {{ item.description || '—' }}
             </td>
             <td class="text-end accounting-table__num">
-              {{ item.movement_type === 'haber' ? $formatAmount(item.amount) : '—' }}
+              {{ item.movement_type === 'debe' ? $formatAmount(item.amount) : '—' }}
             </td>
             <td class="text-end accounting-table__num">
-              {{ item.movement_type === 'debe' ? $formatAmount(item.amount) : '—' }}
+              {{ item.movement_type === 'haber' ? $formatAmount(item.amount) : '—' }}
             </td>
             <td>
               <VChip
@@ -228,15 +228,15 @@
               </p>
               <div class="d-flex justify-space-between gap-4 text-body-2">
                 <div>
-                  <span class="text-medium-emphasis text-caption d-block mb-1">Haber</span>
-                  <span class="accounting-table__num font-weight-medium">
-                    {{ item.movement_type === 'haber' ? $formatAmount(item.amount) : '—' }}
-                  </span>
-                </div>
-                <div class="text-end">
                   <span class="text-medium-emphasis text-caption d-block mb-1">Debe</span>
                   <span class="accounting-table__num font-weight-medium">
                     {{ item.movement_type === 'debe' ? $formatAmount(item.amount) : '—' }}
+                  </span>
+                </div>
+                <div class="text-end">
+                  <span class="text-medium-emphasis text-caption d-block mb-1">Haber</span>
+                  <span class="accounting-table__num font-weight-medium">
+                    {{ item.movement_type === 'haber' ? $formatAmount(item.amount) : '—' }}
                   </span>
                 </div>
               </div>
