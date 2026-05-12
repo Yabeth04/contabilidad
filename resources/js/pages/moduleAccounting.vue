@@ -282,7 +282,7 @@
 
       <VDivider />
 
-      <!-- Totales: fuera del scroll, solo maqueta (montos estáticos) -->
+      <!-- Totales pc -->
       <div
         v-if="mdAndUp"
         class="accounting-totals accounting-totals--desktop px-4 py-3"
@@ -330,6 +330,7 @@
         </div>
       </div>
 
+      <!-- Totales mobile -->
       <div
         v-if="mdAndDown"
         class="accounting-totals accounting-totals--mobile pa-4"
